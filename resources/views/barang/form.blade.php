@@ -373,17 +373,36 @@
 
                     <div class="field">
                         <label>Satuan <span class="req">*</span></label>
-                        <input
-                            type="text"
-                            name="satuan"
-                            class="input-field @error('satuan') is-invalid @enderror"
-                            value="{{ old('satuan', $barang->satuan ?? 'pcs') }}"
-                            placeholder="pcs"
-                        >
-                        @error('satuan')
-                            <div class="field-error">⚠ {{ $message }}</div>
-                        @enderror
-                    </div>
+                        <select name="satuan" class="input-field @error('satuan') is-invalid @enderror">
+                        @php
+                            $satuans = [
+                                'pcs',
+                                'kg',
+                                'gram',
+                                'liter',
+                                'ml',
+                                'meter',
+                                'cm',
+                                'box',
+                                'pack',
+                                'dus'
+                            ];
+                        @endphp
+
+                        <option value="">-- Pilih Satuan --</option>
+
+                        @foreach ($satuans as $satuan)
+                            <option value="{{ $satuan }}"
+                                {{ old('satuan', $barang->satuan ?? '') == $satuan ? 'selected' : '' }}>
+                                {{ strtoupper($satuan) }}
+                            </option>
+                        @endforeach
+                    </select>
+
+            @error('satuan')
+                <div class="field-error">⚠ {{ $message }}</div>
+            @enderror
+                </div>
                 </div>
 
                 <div class="field-group grid-2">
